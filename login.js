@@ -1,13 +1,18 @@
-const express = require('express');
-const app = express();
-const path = require('path');
+//archivos importados
+const { use } = require('./src/routes/index.js');
+const app= require('./src/config/server.js');
+app.use= require('./src/routes/index');
+
+
 // app.use(express.static('public/index.html'));
 
-app.get('/', (req,res)=>{
-    res.sendFile(path.resolve(__dirname, "public/index.html"));
-})
+//Configuracion
 
-app.listen(3000, ()=>{
-    console.log("Puerto 3000");
+// app.use(express.static('src'));
+
+
+
+app.listen(app.get('port'), ()=>{ //obtiene el puerto
+    console.log("port ", app.get('port'));
 });
 
