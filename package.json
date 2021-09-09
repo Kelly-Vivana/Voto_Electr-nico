@@ -3,17 +3,19 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.1.1",
     "connect-flash": "^0.1.1",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
   },
   "name": "voto_electronico",
   "description": "prototipo de voto electrónico para la Universidad de Guayaquil",
   "version": "1.0.0",
   "main": "login.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon login.js"
   },
   "repository": {
     "type": "git",
