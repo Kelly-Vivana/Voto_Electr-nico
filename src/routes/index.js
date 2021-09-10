@@ -7,7 +7,9 @@ router.get('/', (req,res)=>{
 router.get('/registro', (req,res)=>{
     res.render('registro');
 });
-
+router.get('/candidatos', (req,res)=>{
+    res.render('candidatos');
+});
 //  app.get('/registro', (req,res)=>{
 //     res.render('registro', {title: Registrarse});
 //  });
