@@ -10,11 +10,13 @@ const con = mysql.createConnection({
   });
   con.connect((err) => {
     if(err){
-      console.log('Error connecting to Db');
+      console.log('El error de conexion es:' + err);
       return;
     }
-    console.log('Connection established');
+    console.log('Conección establecida');
   });
+
+  module.exports=con;
 
   //Consultas a la base
   con.query(

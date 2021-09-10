@@ -4,8 +4,8 @@ const router= express.Router(); //modulo router pertenece a express, es encargad
 router.get('/', (req,res)=>{
     res.render('index');
 });
-router.get('/registro', (req,res)=>{
-    res.render('registro');
+router.get('/votantes', (req,res)=>{
+    res.render('votantes');
 });
 router.get('/candidatos', (req,res)=>{
     res.render('candidatos');

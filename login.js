@@ -1,7 +1,7 @@
 //archivos importados
 const express= require('express');
 const path= require('path');
-const con = require('./src/config/db_Coneccion');
+const con = require('./src/database/db_Coneccion');
 const mysql= require('mysql') //encargado de hacer peticiones
 
 //Inicializaciones (mando a ejecutar express y devuelve la app)
