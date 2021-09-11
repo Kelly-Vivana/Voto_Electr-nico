@@ -1,27 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
     <%- include('partials/head'); %>
-    <section class="home-section">
-        <div class="text">Registro de Candidatos</div>
-    </section>
-    <script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-  
-    closeBtn.addEventListener("click", ()=>{
-      sidebar.classList.toggle("open");
-      menuBtnChange();//calling the function(optional)
-    });
-  
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-     if(sidebar.classList.contains("open")){
-       closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-     }else {
-       closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
-     }
-    }
-    </script>
+          <div class="content">
+            <div class="container-fluid margen">
+                <a class="icoCRUD" href="/createCandidato">
+                   <span class="material-icons">  person_add</span> 
+                </a>
+            </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header card-header-primary">
+                      <h4 class="card-title ">Candidatos</h4> </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead class=" text-primary">
+                            <th>  Id </th>
+                            <th> Nombre</th>
+                            <th> Cargo </th>
+                            <th> Lista </th>
+                            <th class="centra"> Acciones </th>
+                          </thead>
+                          <tbody>
+                            <% results.forEach((candidato)=>{ %>
+                            <tr>
+                              <td><%= candidato.id %> </td>
+                              <td><%= candidato.nombre %></td>
+                              <td><%= candidato.cargo %></td>
+                              <td><%= candidato.lista %></td>
+                              <td>
+                                  <a href="/editCandidato" class="icoCRUD">Editar</a>
+                                  <a href="/editCandidato" class="icoCRUD">Eliminar</a>
+                              </td>
+                            </tr>
+                          <% }) %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
   </body>
 <%- include('partials/pie'); %>
 </html>

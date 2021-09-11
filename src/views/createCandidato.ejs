@@ -1,2 +1,59 @@
-
-
+<!DOCTYPE html>
+<html lang="es">
+    <%- include('partials/head'); %>
+   
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Crear Candidato</h4>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nombre</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Funcion</label>
+                          <select class="form-control" required>
+                            <option>--Selecciona la funcion--</option>
+                            <% funcion.forEach((f)=>{ %>
+                                <option value="<%= f.funcion%>"><%= f.funcion %></option>
+                            <% } )%>
+                        </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Cargo</label>
+                          <select class="form-control" required>
+                            <option>--Selecciona el cargo--</option>
+                            <% cargo.forEach((n)=>{ %>
+                                <option value="<%= n.cargo%>"><%= n.cargo %></option>
+                            <% } )%>
+                        </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Lista</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Crear Candidato</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+              
