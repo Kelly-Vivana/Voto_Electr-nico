@@ -1,9 +1,11 @@
-//archivos importados
-const express= require('express');
+//Invocacion de modulos
 const path= require('path');
 const con = require('./src/database/db_Coneccion');
-const mysql= require('mysql') //encargado de hacer peticiones
+const mysql= require('mysql'); //encargado de hacer peticiones
+const { json } = require('express');
 
+//Invocacion de express
+const express= require('express');
 //Inicializaciones (mando a ejecutar express y devuelve la app)
 const app =express();
 
@@ -12,8 +14,20 @@ app.set('port', process.env.PORT || 3000); // si el servicio de la nube da un pu
 app.set('views', path.join( __dirname, '/src/views'));
 app.set('view engine', 'ejs');
 
-//Middleware
-//Variables globales
+//Invocacion de Bcrypt
+const bcryptjs = require('bcryptjs');
+
+//Invocacion a variables de sesion
+const session= require('express-session');
+app.use(session({
+    secret:'secret',
+    resave:true,
+    saveUninitialized: true
+}));
+
+//Captura de datos de formulaios
+app.use(express.urlencoded({extended:false}));
+app.use(express(json));
 
 //Routes
 app.use(require('./src/routes/index'));

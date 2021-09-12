@@ -11,21 +11,21 @@
                   <h4 class="card-title">Crear Candidato</h4>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action="/save" method="POST">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Nombre</label>
-                          <input type="text" class="form-control">
+                          <input name="nombre" type="text" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Funcion</label>
-                          <select class="form-control" required>
+                          <select id="funcion" name="funcion" class="form-control" required>
                             <option>--Selecciona la funcion--</option>
                             <% funcion.forEach((f)=>{ %>
-                                <option value="<%= f.funcion%>"><%= f.funcion %></option>
+                                <option value="<%= f.id_funcion%>"><%= f.funcion %></option>
                             <% } )%>
                         </select>
                         </div>
@@ -33,10 +33,10 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Cargo</label>
-                          <select class="form-control" required>
+                          <select id="cargo" name="cargo" class="form-control" required>
                             <option>--Selecciona el cargo--</option>
                             <% cargo.forEach((n)=>{ %>
-                                <option value="<%= n.cargo%>"><%= n.cargo %></option>
+                                <option value="<%= n.id_cargo%>"><%= n.cargo %></option>
                             <% } )%>
                         </select>
                         </div>
@@ -46,11 +46,12 @@
                       <div class="col-md-8">
                         <div class="form-group">
                           <label class="bmd-label-floating">Lista</label>
-                          <input type="text" class="form-control">
+                          <input id="lista" name="lista" type="text" class="form-control">
                         </div>
                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Crear Candidato</button>
+                    <a class="btn btn-primary pull-right" href="/Candidatos">Cancelar</a>
                     <div class="clearfix"></div>
                   </form>
                 </div>

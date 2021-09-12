@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+    <%- include('partials/head'); %>
+   
+      <div class="content">
+        <div class="container-fluid">
+            <% if(candidato){ %>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Editar Candidato</h4>
+                </div>
+                <div class="card-body">
+                  <form action="/update" method="POST">
+                    <input id= id name=id value="<%= candidato.id %>" hidden>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nombre</label>
+                          <input name="nombre" value="<%= candidato.nombre %>" type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Funcion</label>
+                          <select id="funcion" name="funcion" class="form-control" required>
+                            <% funcion.forEach((f)=>{ %>
+                                <option <%= candidato.id_funcion == f.id_funcion ? "selected" : '' %> 
+                                    value="<%= f.id_funcion%>"><%= f.funcion %></option>
+                            <% } )%>
+                        </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Cargo</label>
+                          <select id="cargo" name="cargo" class="form-control" required>
+                            <% cargo.forEach((n)=>{ %>
+                                <option <%= candidato.id_cargo == n.id_cargo ? "selected" : '' %>
+                                 value="<%= n.id_cargo%>"><%= n.cargo %></option>
+                            <% } )%>
+                        </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Lista</label>
+                          <input id="lista" value="<%= candidato.lista %>" name="lista" type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Guardar</button>
+                    <a class="btn btn-primary pull-right" href="/Candidatos">Cancelar</a>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+        <% } %>
+        
+        </div>
+    </div>
+            

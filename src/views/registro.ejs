@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge ,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="icon" href="../public/img/favicon.png">
+    <script src="https://kit.fontawesome.com/3ca3b444c8.js" crossorigin="anonymous"></script>
+    <script src=""></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <title>Registro Usuario</title>
+   
+</head> 
+
+<body>
+    <img class="wave" src="img/wave.png">
+    <div class="container">
+        <div class="img"> <img src="img/bg.svg"> </div>
+        <div class="login-content">
+            <form action="/registro" method="POST">
+                <img src="img/avatar.svg">
+                <h2 class="title">Registrate!!</h2>
+                <div class="input-div one">
+                    <div class="i"> <i class="fas fa-user "></i></div>
+                    <div class="div ">
+                        <input type="text" name="cedula" id="cedula" class="input" placeholder="Cedula">
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i"> <i class="fas fa-lock"></i></div>
+                    <div class="div ">
+                        <input type="password" name="contraseña" id="contraseña" class="input" placeholder="Contraseña">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i"> <i class="fas fa-user "></i></div>
+                        <select type="text" name="rol" class="select">
+                            <option>--Selecciona el rol--</option>
+                            <% rol.forEach((n)=>{ %>
+                                <option value="<%= n.id_rol%>"><%= n.rol %></option>
+                            <% } )%>
+                        </select>
+                </div>
+                <input type="submit" class="btn" value="Login">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

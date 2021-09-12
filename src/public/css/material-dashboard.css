@@ -15332,12 +15332,28 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   margin-bottom: 20px !important;
   margin-top: 20px !important;
 }
-
-.icoCRUD:hover{
-  background:rgb(68, 197, 148) !important;
+.icoDelete:hover{
+  background:#E31733 !important;
   color: rgb(255, 255, 255) !important;
   border-radius: 6px;
-  border: 1px solid #4cb491;
+  border: 1px solid #067EBB;
+  border-color: #D91631;
+}
+.icoDelete{
+  padding: .375rem .75rem;
+  border: 1px solid #007bff;
+  border-radius: .25rem;
+  color: #E31733 !important;
+  border-color: #D91631;
+  transition: color .15s ease-in-out,
+    background-color .15s ease-in-out;
+}
+
+.icoCRUD:hover{
+  background:#33BBFF !important;
+  color: rgb(255, 255, 255) !important;
+  border-radius: 6px;
+  border: 1px solid #067EBB;
 }
 .icoCRUD{
   padding: .375rem .75rem;

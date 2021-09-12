@@ -58,14 +58,13 @@ form {
     margin: 15px 0;
     color: rgb(47, 69, 129);
     text-transform: uppercase;
-    font-size: 2.9rem;
+    font-size: 2.2rem;
 }
 
 .login-content .input-div {
     position: relative;
     display: grid;
     grid-template-columns: 7% 93%;
-    margin: 25px 0;
     padding: 5px 0;
     border-bottom: 2px solid #d9d9d9;
 }
@@ -85,9 +84,12 @@ form {
     transition: .3s;
 }
 
+
+
 .input-div>div {
     position: relative;
     height: 45px;
+    color: rgb(56,211,159);
 }
 
 .input-div>div>h5 {
@@ -96,8 +98,9 @@ form {
     top: 50%;
     transform: translateY(-50%);
     color: #999;
-    font-size: 18px;
+    font-size: 12px;
     transition: .3s;
+    display: none;
 }
 
 .input-div:before,
@@ -118,6 +121,8 @@ form {
 .input-div:after {
     left: 50%;
 }
+
+
 
 .input-div.focus:before,
 .input-div.focus:after {
@@ -143,8 +148,15 @@ form {
     outline: none;
     background: none;
     padding: 0.5rem 0.7rem;
-    font-size: 1.2rem;
-    color: #555;
+    font-size: 0.9rem;
+    font-family: 'poppins', sans-serif;
+}
+.select { 
+    width: 240px; 
+    height: 34px; 
+    overflow: hidden; 
+    background: url(new_arrow.png) no-repeat right rgb(212, 240, 249); 
+    border: 1px solid rgb(237, 250, 255); 
     font-family: 'poppins', sans-serif;
 }
 
@@ -198,7 +210,7 @@ a:hover {
         width: 290px;
     }
     .login-content h2 {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
         margin: 8px 0;
     }
     .img img {
