@@ -38,17 +38,22 @@ exports.save=(req,res)=>{
     const pass = req.body.contraseña;
     const rol = req.body.rol;
     let passHash = await bcryptjs.hash(pass, 8);
-    const votante= con.query(`SELECT identificacion, id_rol FROM administrador WHERE identificacion = ? and rol= ? `, [cedula, rol] ,(err, result)=>{
+    const admin= con.query(`SELECT identificacion, id_rol FROM administrador WHERE identificacion = ? and rol= ? `, [cedula, rol] ,(err, result)=>{
         if(err)throw err;
         if(result.length !== 0 ) {
             con.query(`INSERT INTO usuarios SET = ? `, {cedula:Identificacion, pass:Contraseña, rol:id_rol}, async(err, result)=>{
-          // si no esta registrado o si la password no coincide
-        else if(result.length === 0 ){ 
-                    res.send('Usuario o Pass incrorrecta');
-            }else{res.send('Login correcto');}
-       })
-    }
-});
+          });}
+        else{console.log('No tiene permisos para registrarse como ADMIN');}
+    });
+    const votante= con.query(`SELECT identificacion, id_rol FROM votantes WHERE identificacion = ? and rol= ? `, [cedula, rol] ,(err, resuld)=>{
+        if(err)throw err;
+        if(resuld.length !== 0 ) {
+                con.query(`INSERT INTO usuarios SET = ? `, {cedula:Identificacion, pass:Contraseña, rol:id_rol}, async(err, resuld)=>{
+            });}
+        else{ console.log('No tiene permisos para registrarse como VOTANTE');}
+        });
+  }
+
 
  
     
