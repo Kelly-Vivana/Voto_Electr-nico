@@ -1,4 +1,5 @@
-const con = require('../database/db_Coneccion')
+const con = require('../database/db_Coneccion');
+const bcryptjs = require('bcryptjs');
 
 exports.save=(req,res)=>{
     const nombre= req.body.nombre;
@@ -34,24 +35,39 @@ exports.save=(req,res)=>{
         }
 
   exports.registro =async (req,res)=>{
+    var queries = [
+        `SELECT identificacion, id_rol FROM administrador WHERE identificacion = ? and id_rol= ? `, 
+        `SELECT identificacion, id_rol FROM votantes WHERE identificacion = ? and id_rol= ? `,        
+        ];
     const cedula= req.body.cedula;
     const pass = req.body.contraseña;
     const rol = req.body.rol;
     let passHash = await bcryptjs.hash(pass, 8);
-    const admin= con.query(`SELECT identificacion, id_rol FROM administrador WHERE identificacion = ? and rol= ? `, [cedula, rol] ,(err, result)=>{
+    const admin= con.query(queries.join(';'),[cedula, rol, cedula, rol] ,(err, result)=>{
         if(err)throw err;
-        if(result.length !== 0 ) {
-            con.query(`INSERT INTO usuarios SET = ? `, {cedula:Identificacion, pass:Contraseña, rol:id_rol}, async(err, result)=>{
-          });}
+        if(result[0].length > 0 ) {
+            con.query(`INSERT INTO usuarios SET ? `, {Identificacion:cedula, Contraseña:passHash, id_rol:rol}, async(erro, results)=>{
+                if(erro)throw erro;
+                res.redirect('/candidatos');
+            });
+        }
+        else if(result[1].length > 0 ){
+            con.query(`INSERT INTO usuarios SET ? `, {Identificacion:cedula, Contraseña:passHash, id_rol:rol}, async(error, resulds)=>{
+                if(error)throw error;
+                res.send('Votante insertado');
+                 });
+        }
         else{console.log('No tiene permisos para registrarse como ADMIN');}
     });
-    const votante= con.query(`SELECT identificacion, id_rol FROM votantes WHERE identificacion = ? and rol= ? `, [cedula, rol] ,(err, resuld)=>{
-        if(err)throw err;
-        if(resuld.length !== 0 ) {
-                con.query(`INSERT INTO usuarios SET = ? `, {cedula:Identificacion, pass:Contraseña, rol:id_rol}, async(err, resuld)=>{
-            });}
-        else{ console.log('No tiene permisos para registrarse como VOTANTE');}
-        });
+    // const votante= con.query(`SELECT identificacion, id_rol FROM votantes WHERE identificacion = ? and id_rol= ? `, [cedula, rol] ,(err, resuld)=>{
+    //     if(err)throw err;
+    //     if(resuld.length !== 0 ) {
+    //         con.query(`INSERT INTO usuarios SET = ? `, {Identificacion:cedula, Contraseña:passHash, id_rol:rol}, async(error, resulds)=>{
+    //             if(error)throw error;
+    //             res.send('Votante insertado');
+    //         });}
+    //     else{ console.log('No tiene permisos para registrarse como VOTANTE'+ resuld);}
+    //     });
   }
 
 
