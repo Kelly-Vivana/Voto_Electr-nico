@@ -24,10 +24,12 @@
      //Calculo del gas 
     const gasEstimate= await new web3.eth.Contract(abi).deploy({data:bytcode, arguments: argumentsConstruct})
     .gasEstimate({from: accounts[0]});
-    
+
     //objeto transaccion para subir el contrato, este genera un recibo
     //Cuando se pide datos(code) y escritura, es decir transaccion firmada(send)
-    const result= await new web3.eth.Contract(abi).deploy({data:bytcode, arguments: argumentsConstruct})
+    const result= await new web3.eth.Contract(abi).deploy({data:bytcode, arguments: argumentsConstructor})
     .send({gas: gasEstimate, from: accounts[0]})
 
-    }
+        console.log("Cuenta: ",result.option.address); //ejecutar npm run deploy
+}
+deploy();

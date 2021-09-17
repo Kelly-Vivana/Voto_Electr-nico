@@ -5,10 +5,14 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "fs": "^0.0.1-security",
     "mysql": "^2.18.1",
     "path": "^0.12.7",
+    "solc": "^0.8.7-fixed",
+    "solidity": "^0.0.1",
     "sweetalert2": "^11.1.5",
-    "truffle-hdwallet-provider": "^1.0.17"
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.5.2"
   },
   "name": "voto_electronico",
   "description": "prototipo de voto electrónico para la Universidad de Guayaquil",

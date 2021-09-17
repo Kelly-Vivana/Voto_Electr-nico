@@ -58,7 +58,8 @@ exports.save=(req,res)=>{
                  });
         }
         else{console.log('No tiene permisos para registrarse como ADMIN');}
-    });
+        });
+    }
     // const votante= con.query(`SELECT identificacion, id_rol FROM votantes WHERE identificacion = ? and id_rol= ? `, [cedula, rol] ,(err, resuld)=>{
     //     if(err)throw err;
     //     if(resuld.length !== 0 ) {
