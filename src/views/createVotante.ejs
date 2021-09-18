@@ -8,11 +8,17 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Crear Candidato</h4>
+                  <h4 class="card-title">Crear Votante</h4>
                 </div>
                 <div class="card-body">
-                  <form action="/save" method="POST">
+                  <form action="/save_Votante" method="POST">
                     <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Identificacion</label>
+                          <input name="identificacion" type="number" maxlength=10 class="form-control">
+                        </div>
+                      </div>
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Nombre</label>
@@ -21,37 +27,19 @@
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Funcion</label>
-                          <select id="funcion" name="funcion" class="form-control" required>
-                            <option>--Selecciona la funcion--</option>
-                            <% funcion.forEach((f)=>{ %>
-                                <option value="<%= f.id_funcion%>"><%= f.funcion %></option>
-                            <% } )%>
-                        </select>
+                          <label class="bmd-label-floating">Apellido</label>
+                          <input name="apellido" type="number" class="form-control">
                         </div>
                       </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Cargo</label>
-                          <select id="cargo" name="cargo" class="form-control" required>
-                            <option>--Selecciona el cargo--</option>
-                            <% cargo.forEach((n)=>{ %>
-                                <option value="<%= n.id_cargo%>"><%= n.cargo %></option>
-                            <% } )%>
-                        </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
                       <div class="col-md-8">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Lista</label>
-                          <input id="lista" name="lista" type="text" class="form-control">
+                          <label class="bmd-label-floating">Facultad</label>
+                          <input id="Facultad" name="facultad" type="text" class="form-control">
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Crear Candidato</button>
-                    <a class="btn btn-primary pull-right" href="/Candidatos">Cancelar</a>
+                    <button type="submit" class="btn btn-primary pull-right">Crear Votante</button>
+                    <a class="btn btn-primary pull-right" href="/votantes">Cancelar</a>
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -70,12 +58,11 @@
                     icon: '<%= alertIcon %>',
                     showConfimButton: <%= showConfirmButton %>,
                     timer: <%= time%>
-
                 }).then(()=>{
                     window.location ='/<%=ruta%>'
                 })
             </script>
     <%}%>
 </body>
-
 </html>
+              

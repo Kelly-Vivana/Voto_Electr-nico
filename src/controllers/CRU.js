@@ -22,6 +22,59 @@ exports.save=(req,res)=>{
     });
     
  }
+
+ exports.save_Votante=(req,res)=>{
+    const ide= req.body.identificacion;
+    const nombre = req.body.nombre;
+    const apellido = req.body.apellido;
+    const facultad =req.body.facultad;
+    console.log(ide, nombre,apellido,facultad);
+    if (ide.length === 0 || nombre.length === 0 || apellido.length === 0 || facultad.length === 0){
+        res.render('createVotante', {
+            alert:true,
+            alertTitle: "Error",
+            alertMessage: "Debe llenar todo los campos",
+            alertIcon: 'error',
+            showConfirmButton: false,
+            time: false,
+            ruta: 'createVotante'
+         });
+    }  
+    else{
+        con.query(`SELECT identificacion FROM votantes WHERE identificacion = ? `, [ide] ,(err, result)=>{
+            if(err){throw err;}
+            else{
+                if(result.length === 0 ) {
+                console.log('No existe, se puede crear');
+                con.query(`insert into votantes set ? `, 
+                {identificacion:ide, nombre:nombre, apellido:apellido, facultad:facultad, id_rol:2}, (err, results)=>{
+                if(err) throw err;
+                res.render('createVotante', {
+                    alert:true,
+                    alertTitle: "Reistro",
+                    alertMessage: "Votante registrado correctamente",
+                    alertIcon: 'success',
+                    showConfirmButton: false,
+                    time: false,
+                    ruta: 'votantes'
+                });
+                });
+                }
+            else{
+                res.render('createVotante', {
+                    alert:true,
+                    alertTitle: "Error",
+                    alertMessage: "El Votante ya se encuentra registrado",
+                    alertIcon: 'error',
+                    showConfirmButton: false,
+                    time: false,
+                    ruta: 'createVotante'
+                });
+            }
+        }
+    });
+}
+}
  exports.update=(req,res)=>{
     const id= req.body.id;
     const nombre= req.body.nombre;
@@ -34,44 +87,72 @@ exports.save=(req,res)=>{
                    res.redirect('/candidatos')});
         }
 
-  exports.registro =async (req,res)=>{
+
+exports.inicio = (req,res)=>{
     var queries = [
-        `SELECT identificacion, id_rol FROM administrador WHERE identificacion = ? and id_rol= ? `, 
-        `SELECT identificacion, id_rol FROM votantes WHERE identificacion = ? and id_rol= ? `,        
-        ];
-    const cedula= req.body.cedula;
-    const pass = req.body.contraseña;
-    const rol = req.body.rol;
-    let passHash = await bcryptjs.hash(pass, 8);
-    const admin= con.query(queries.join(';'),[cedula, rol, cedula, rol] ,(err, result)=>{
-        if(err)throw err;
-        if(result[0].length > 0 ) {
-            con.query(`INSERT INTO usuarios SET ? `, {Identificacion:cedula, Contraseña:passHash, id_rol:rol}, async(erro, results)=>{
-                if(erro)throw erro;
-                res.redirect('/candidatos');
-            });
-        }
-        else if(result[1].length > 0 ){
-            con.query(`INSERT INTO usuarios SET ? `, {Identificacion:cedula, Contraseña:passHash, id_rol:rol}, async(error, resulds)=>{
-                if(error)throw error;
-                res.send('Votante insertado');
+        `SELECT Nombre, id_rol FROM administrador WHERE identificacion = ?`, 
+        `SELECT nombre, id_rol FROM votantes WHERE identificacion = ? `
+    ]
+    const usuario= req.body.cedula;
+        if(usuario){
+            con.query(queries.join(';'), [usuario, usuario], (err, result)=>{
+            if(err)throw err;
+             // si no esta registrado 
+            if(result[0].length === 0 && result[1].length === 0){ 
+                res.render('index', {
+                    alert:true,
+                    alertTitle: "Error",
+                    alertMessage: "Usuario no esta habilitado en el sistema",
+                    alertIcon: 'error',
+                    showConfirmButton: false,
+                    time: false,
+                    ruta: ''
                  });
-        }
-        else{console.log('No tiene permisos para registrarse como ADMIN');}
+            }
+            else if(result[0].length > 0 && result[1].length === 0){ 
+                req.session.loggedIn=true;
+                req.session.rol= result[0][0].id_rol;
+                req.session.name = result[0][0].Nombre;
+                res.render('index', {
+                    alert:false,
+                    alertTitle: "Administrador",
+                    alertMessage: "Ingreso exitoso",
+                    alertIcon: 'success',
+                    showConfirmButton: false,
+                    time: 1500,
+                    ruta: 'candidatos'
+
+                });
+            }
+           else{
+            req.session.loggedIn =true;
+            req.session.rol= result[1][0].id_rol;
+            req.session.name = result[1][0].nombre;
+                res.render('index', {
+                    alert:true,
+                    alertTitle: "Votaciones",
+                    alertMessage: "Ingreso exitoso",
+                    alertIcon: 'success',
+                    showConfirmButton: false,
+                    time: 1000,
+                    ruta: ''
+                });
+            }
+        });
+    }else{
+        res.render('index', {
+            alert:true,
+            alertTitle: "Error",
+            alertMessage: "Ingrese su cedula",
+            alertIcon: 'error',
+            showConfirmButton: false,
+            time: 1500,
+            ruta: ''
         });
     }
-    // const votante= con.query(`SELECT identificacion, id_rol FROM votantes WHERE identificacion = ? and id_rol= ? `, [cedula, rol] ,(err, resuld)=>{
-    //     if(err)throw err;
-    //     if(resuld.length !== 0 ) {
-    //         con.query(`INSERT INTO usuarios SET = ? `, {Identificacion:cedula, Contraseña:passHash, id_rol:rol}, async(error, resulds)=>{
-    //             if(error)throw error;
-    //             res.send('Votante insertado');
-    //         });}
-    //     else{ console.log('No tiene permisos para registrarse como VOTANTE'+ resuld);}
-    //     });
-  }
-
-
+}
+        
+        
  
     
 

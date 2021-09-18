@@ -17,6 +17,10 @@ app.set('view engine', 'ejs');
 //Invocacion de Bcrypt
 const bcryptjs = require('bcryptjs');
 
+
+//Captura de datos de formulaios Middlewares
+app.use(express.urlencoded({extended:false}));
+app.use(express(json)); //convirte los datos del req.body
 //Invocacion a variables de sesion
 const session= require('express-session');
 app.use(session({
@@ -25,9 +29,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-//Captura de datos de formulaios
-app.use(express.urlencoded({extended:false}));
-app.use(express(json));
 
 //Routes
 app.use(require('./src/routes/index'));

@@ -7,89 +7,84 @@ const app=express();
 
 const crud = require('../controllers/CRU');
 router.post('/save', crud.save);
+router.post('/save_Votante', crud.save_Votante);
 router.post('/update', crud.update);
+router.post('/inicio', crud.inicio);
 
-
-
-router.get('/', (req,res)=>{
+router.get('/login', (req,res)=>{
     res.render('index');
 });
+router.get('/logout', (req,res)=>{
+    req.session.destroy(()=>{
+        res.redirect('login');
+    })
+});
 
-// router.get('/registro', (req,res)=>{
-//     res.render('registro');
-// });
+router.get('/', (req,res)=>{
+    //let user= req.session.name;
+    if(req.session.loggedIn && req.session.rol == 2){
+   //     res.locals.user = req.session.name;
+   con.query(`SELECT nombre,cargo, lista, id_cargo FROM candidato, cargo WHERE candidato.id_cargo = cargo.id`, (err, result)=>{
+     if(err)throw err; 
+     res.render('ingreso',{
+            candidatos: result,
+            login: true,
+            name: req.session.name
+      });
+});
+    }else{
+        res.render('index',{
+        login: false
+    });
+    }   
+});
 
-
-// router.post('/inicio', async (req,res)=>{
-//     const usuario= req.body.cedula;
-//     const pass = req.body.contraseña;
-//     let passHash = await bcryptjs.hash(pass, 8);
-//     if(usuario && pass){
-//         con.query(`SELECT * FROM usuarios WHERE Identificacion = ? `, [usuario], async(err, result)=>{
-//           // si no esta registrado o si la password no coincide
-//             if(result.length == 0 || !(await bcryptjs.compare(pass, result[0].Contraseña))){ 
-//                     res.send('Usuario o Pass incrorrecta');
-//             }else{res.send('Login correcto');}
-//        })
-//     }
-// });
-// router.get('/votantes', (req,res)=>{
-//     res.render('votantes');
-// });
 router.get('/candidatos', (req,res)=>{
-    con.query(`SELECT id, nombre, lista, funcion, cargo 
-                FROM candidato c, funcion f, cargo cr 
-                WHERE c.id_cargo=cr.id_cargo AND
-                c.id_funcion= f.id_funcion`, (err, result)=>{
-        if(err){
-            throw err;
-        }else{
-            res.render('candidatos', {results: result});
-        }
-    });
-});
-
-
-router.get('/delete:id', (req, res)=>{
-    const id= req.params.id;
-    con.query('DELETE FROM candidato WHERE id= ?', [id], (err,result)=>{
-        if(err) throw err;
-        res.redirect('/candidatos');
-    });
-});
+    if(req.session.loggedIn && req.session.rol == 1){
+        con.query(`SELECT id, nombre, lista, funcion, cargo 
+                    FROM candidato c, funcion f, cargo cr 
+                    WHERE c.id_cargo=cr.id_cargo AND
+                    c.id_funcion= f.id_funcion`, (err, result)=>{
+            if(err)throw err;
+            res.render('candidatos', {
+                results: result,
+                login: true,
+                name: req.session.name});
+        });
+    }else{
+        res.render('index',{
+        login: false });
+    }
+});   
 
 var queries = [
     `select id_cargo, cargo from cargo`,
     `select id_funcion, funcion from funcion`
     
     ];
-    
+
 router.get('/createCandidato', (req,res)=>{
+    if(req.session.loggedIn && req.session.rol == 1){
     con.query(queries.join(';'), (err, result)=>{
         if(err){
             throw err;
         }else{
             res.render('createCandidato', {
                 cargo: result[0],
-                funcion: result[1]
+                funcion: result[1],
+                login: true,
+                name: req.session.name
             }); 
          }
      });
+    }else{
+        res.render('index',{
+        login: false });
+    }
 });
-
-router.get('/registro', (req,res)=>{
-    con.query(`SELECT id_rol, rol FROM rol`, (err, result)=>{
-        if(err){
-            throw err;
-        }else{
-            res.render('registro', {rol: result});
-        }
-    });
-});
-
-router.post('/registro', crud.registro);
 
 router.get('/editCandidato:id', (req,res)=>{
+    if(req.session.loggedIn && req.session.rol == 1){
     const id= req.params.id;
     con.query(`select * from candidato where id= ?`, [id],(err,result)=>{
          if(err){ throw err;
@@ -100,13 +95,82 @@ router.get('/editCandidato:id', (req,res)=>{
                   res.render('editCandidato', {
                        cargo: resultd[0],
                        funcion: resultd[1],
-                      candidato: result[0]
+                      candidato: result[0],
+                      login: true,
+                      name: req.session.name
                       });
                     }
                 });
         }
     });
+}else{
+    res.render('index',{
+    login: false });
+}
 });
+
+router.get('/delete:id', (req, res)=>{
+    const id= req.params.id;
+    con.query('DELETE FROM candidato WHERE id= ?', [id], (err,result)=>{
+        if(err) throw err;
+        res.redirect('/candidatos');
+    });
+});
+
+
+router.get('/votantes', (req,res)=>{
+    if(req.session.loggedIn && req.session.rol == 1){
+    con.query(`SELECT * FROM votantes`, (err, result)=>{
+        if(err){
+            throw err;
+        }else{
+            res.render('votantes', {
+                results: result, 
+                login: true,
+                name: req.session.name
+            });
+        }
+    });
+}else{
+    res.render('index',{
+    login: false });
+}
+});
+
+router.get('/createVotante', (req,res)=>{
+    if(req.session.loggedIn && req.session.rol == 1){
+    res.render('createVotante');
+}else{
+    res.render('index',{
+    login: false });
+}
+});
+
+router.get('/deleteVotante:id', (req, res)=>{
+    const cedula= req.params.id;
+    con.query('DELETE FROM votantes WHERE identificacion= ?', [cedula], (err,result)=>{
+        if(err) throw err;
+        res.redirect('/votantes');  
+    });
+});
+
+
+router.get('/estadisticas', (req,res)=>{
+    if(req.session.loggedIn){
+    res.render('estadisticas',{
+        login: true,
+        name: req.session.name
+    });
+    }else{
+        res.render('index',{
+        login: false,
+        name: 'Debe iniciar session'
+    });
+    }
+});
+
+
+
     
 
 //  app.get('/registro', (req,res)=>{
