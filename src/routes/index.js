@@ -26,7 +26,7 @@ router.get('/', (req,res)=>{
         `select id, nombre from lista`,
         `SELECT nombre,cargo, lista, id_cargo FROM candidato, cargo WHERE candidato.id_cargo = cargo.id`
         ];
-    if(req.session.loggedIn){
+    if(req.session.loggedIn && req.session.rol == 2){
    //     res.locals.user = req.session.name;
    con.query(queries.join(';'), (err, result)=>{
      if(err)throw err; 
@@ -34,6 +34,7 @@ router.get('/', (req,res)=>{
             listas: result[0],
             candidatos: result[1],
             login: true,
+            rol:2,
             name: req.session.name
       });
 });
@@ -55,6 +56,7 @@ router.get('/candidatos', (req,res)=>{
             res.render('candidatos', {
                 results: result,
                 login: true,
+                rol:1,
                 name: req.session.name});
         });
     }else{
@@ -78,6 +80,7 @@ router.get('/createCandidato', (req,res)=>{
             res.render('createCandidato', {
                 cargo: result[0],
                 funcion: result[1],
+                rol:1,
                 login: true,
                 name: req.session.name
             }); 
@@ -103,6 +106,7 @@ router.get('/editCandidato:id', (req,res)=>{
                        funcion: resultd[1],
                       candidato: result[0],
                       login: true,
+                      rol:1,
                       name: req.session.name
                       });
                     }
@@ -133,6 +137,7 @@ router.get('/votantes', (req,res)=>{
             res.render('votantes', {
                 results: result, 
                 login: true,
+                rol:1,
                 name: req.session.name
             });
         }
@@ -145,7 +150,11 @@ router.get('/votantes', (req,res)=>{
 
 router.get('/createVotante', (req,res)=>{
     if(req.session.loggedIn && req.session.rol == 1){
-    res.render('createVotante');
+    res.render('createVotante',{
+        rol:1,
+        login: true,
+        name: req.session.name
+    });
 }else{
     res.render('index',{
     login: false });
@@ -163,11 +172,19 @@ router.get('/deleteVotante:id', (req, res)=>{
 
 router.get('/estadisticas', (req,res)=>{
     
-    if(req.session.loggedIn){
-    res.render('estadisticas',{
-        login: true,
-        name: req.session.name
-    });
+    if(req.session.loggedIn && req.session.rol == 1){
+        res.render('estadisticas',{
+            login: true,
+            rol:1,
+            name: req.session.name
+        });
+    }
+    else if(req.session.loggedIn && req.session.rol == 2){
+        res.render('estadisticas',{
+            login: true,
+            rol:2,
+            name: req.session.name
+        });
     }else{
         res.render('index',{
         login: false,

@@ -8,6 +8,30 @@
         Votaciones ug
       </a>
     </div>
+    <% if (rol===2) {%>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              <i class="fas fa-chart-bar fa-7x"></i>
+              <p>Votaciones</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/estadisticas">
+              <i class="fas fa-users-cog"></i>
+              <p>Estadísticas</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <p>Cerrar Session</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <%  } else{ %> 
     <div class="sidebar-wrapper">
       <ul class="nav">
         <li class="nav-item ">
@@ -42,6 +66,7 @@
         </li>
       </ul>
     </div>
+    <%  } %> 
   </div>
   <div class="main-panel">
     <!-- Navbar -->

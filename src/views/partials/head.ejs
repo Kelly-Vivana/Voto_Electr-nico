@@ -2,13 +2,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="icon" href="img/favicon.png">
     <link href="css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-     <title>Voto Virtual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Voto Virtual</title>
+    <style>
+        .Formatos {
+            display: flex;
+            flex-flow: wrap;
+            justify-content: center;
+        }
+
+        .TpTx {
+            background-color: rgb(222, 240, 246);
+            margin: 10px;
+            padding: 20px;
+            border-top: 5px solid rgb(8, 21, 138);
+            box-shadow: 0 20px 40px -10px rgba(7, 7, 7, 0.25);
+            transition: 0.3s;
+            width: 40%;
+        }
+
+        .TpTx:hover {
+            transform: scale(1.02);
+            background-color: rgb(190, 215, 236);
+            opacity: 0.9;
+        }
+
+        @media screen and (max-width:859px) {
+            .TpTx {
+                width: 38%;
+                font-size: 15px;
+            }
+        }
+
+        @media screen and (max-width:715px) {
+            .TpTx {
+                width: 100%;
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
+
 <body class="">
     <img class="wave" src="img/wave2.png">
-        <%- include('navbar'); %>
+    <%- include('navbar'); %>

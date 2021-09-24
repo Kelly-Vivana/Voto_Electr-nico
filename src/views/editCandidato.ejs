@@ -24,7 +24,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Funcion</label>
-                          <select id="funcion" name="funcion" class="form-control" required>
+                          <select id="funcion" name="funcion" class="form-control" >
                             <% funcion.forEach((f)=>{ %>
                                 <option <%= candidato.id_funcion == f.id_funcion ? "selected" : '' %> 
                                     value="<%= f.id_funcion%>"><%= f.funcion %></option>
@@ -35,7 +35,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Cargo</label>
-                          <select id="cargo" name="cargo" class="form-control" required>
+                          <select id="cargo" name="cargo" class="form-control" >
                             <% cargo.forEach((n)=>{ %>
                                 <option <%= candidato.id_cargo == n.id_cargo ? "selected" : '' %>
                                  value="<%= n.id_cargo%>"><%= n.cargo %></option>
