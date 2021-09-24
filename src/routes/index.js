@@ -22,12 +22,17 @@ router.get('/logout', (req,res)=>{
 
 router.get('/', (req,res)=>{
     //let user= req.session.name;
-    if(req.session.loggedIn && req.session.rol == 2){
+    var queries = [
+        `select id, nombre from lista`,
+        `SELECT nombre,cargo, lista, id_cargo FROM candidato, cargo WHERE candidato.id_cargo = cargo.id`
+        ];
+    if(req.session.loggedIn){
    //     res.locals.user = req.session.name;
-   con.query(`SELECT nombre,cargo, lista, id_cargo FROM candidato, cargo WHERE candidato.id_cargo = cargo.id`, (err, result)=>{
+   con.query(queries.join(';'), (err, result)=>{
      if(err)throw err; 
      res.render('ingreso',{
-            candidatos: result,
+            listas: result[0],
+            candidatos: result[1],
             login: true,
             name: req.session.name
       });
@@ -41,9 +46,10 @@ router.get('/', (req,res)=>{
 
 router.get('/candidatos', (req,res)=>{
     if(req.session.loggedIn && req.session.rol == 1){
-        con.query(`SELECT id, nombre, lista, funcion, cargo 
+        con.query(`SELECT c.id, nombre, lista, funcion, cargo 
                     FROM candidato c, funcion f, cargo cr 
-                    WHERE c.id_cargo=cr.id_cargo AND
+                    WHERE c.id_cargo=cr.id
+                    AND
                     c.id_funcion= f.id_funcion`, (err, result)=>{
             if(err)throw err;
             res.render('candidatos', {
@@ -58,7 +64,7 @@ router.get('/candidatos', (req,res)=>{
 });   
 
 var queries = [
-    `select id_cargo, cargo from cargo`,
+    `select id, cargo from cargo`,
     `select id_funcion, funcion from funcion`
     
     ];
@@ -156,6 +162,7 @@ router.get('/deleteVotante:id', (req, res)=>{
 
 
 router.get('/estadisticas', (req,res)=>{
+    
     if(req.session.loggedIn){
     res.render('estadisticas',{
         login: true,

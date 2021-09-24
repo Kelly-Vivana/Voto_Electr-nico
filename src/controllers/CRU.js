@@ -1,16 +1,22 @@
 const con = require('../database/db_Coneccion');
-const bcryptjs = require('bcryptjs');
 
 exports.save=(req,res)=>{
     const nombre= req.body.nombre;
     const cargo = req.body.cargo;
     const funcion = req.body.funcion;
     const lista =req.body.lista;
+    //let EDFile = req.file.archivo;
+    //const Uppath = __dirname + '/files/' + file.name;
+    //console.log(EDFile.name);
+    /*if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+      }
+      console.log(EDFile);*/
     const candidato= con.query(`SELECT nombre FROM candidato WHERE nombre = ? `, [nombre] ,(err, result)=>{
         if(err)throw err;
         if(result.length=== 0 &&  lista.length !== 0 && cargo !== '--Selecciona el cargo--'&& funcion !== '--Selecciona la funcion--') {
             con.query(`insert into candidato set ? `, 
-            {nombre:nombre, id_cargo:cargo, id_funcion:funcion, lista:lista}, (err, results)=>{
+            {nombre:nombre, id_cargo:cargo, id_funcion:funcion, lista:lista, imagen:productData}, (err, results)=>{
             if(err) {throw err;}
             else{res.redirect('/candidatos');
                 }

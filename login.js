@@ -3,20 +3,18 @@ const path= require('path');
 const con = require('./src/database/db_Coneccion');
 const mysql= require('mysql'); //encargado de hacer peticiones
 const { json } = require('express');
+const fileUpload = require('express-fileupload');
 
 //Invocacion de express
 const express= require('express');
 //Inicializaciones (mando a ejecutar express y devuelve la app)
 const app =express();
+app.use(fileUpload());
 
 //configuracion de la app
 app.set('port', process.env.PORT || 3000); // si el servicio de la nube da un puerto usalo, caso contrario usa el 3000
 app.set('views', path.join( __dirname, '/src/views'));
 app.set('view engine', 'ejs');
-
-//Invocacion de Bcrypt
-const bcryptjs = require('bcryptjs');
-
 
 //Captura de datos de formulaios Middlewares
 app.use(express.urlencoded({extended:false}));

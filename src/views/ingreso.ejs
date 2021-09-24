@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <%- include('partials/head-votante'); %>
      <% if (login) {%>
         <div class="dropdown" style="float: right;">
@@ -11,34 +11,49 @@
             </ul>
         </div> 
       <h1>Bienvenido <%= name %> a las votaciones UG</h1>
+      <div class="Formatos">
+            <% listas.forEach((l)=>{%>
+              <div class="TpTx">
+              <h2>Lista <%= l.id%></h2>
+              <% candidatos.forEach((c)=>{ %>
+                <% if (c.lista === l.id) {%>
+                  <option value="<%= c.lista%>"><%=c.cargo + ': '+c.nombre%></option>
+                <% } });%>
+              </div>
+            <% });%>
+      </div>
        <%  } %>       
-         
-        <h2>Rector</h2>
-        
-        <select id="funcion" name="funcion" class="form-control" required>
-          <option>--Selecciona el rector--</option>
-        <% candidatos.forEach((c)=>{ %>
-          <% console.log(c); if (c.id_cargo=== 1) {%>
-            <option value="<%= c.lista%>"><%= c.lista + c.nombre%></option>
-           <% } });%>
-          </select>
-          <h2>Vicerrector</h2>
-        <select id="funcion" name="funcion" class="form-control" required>
-          <option>--Selecciona el vicerrector--</option>
-        <% candidatos.forEach((c)=>{ %>
-          <% console.log(c); if (c.id_cargo=== 2) {%>
-            <option value="<%= c.lista%>"><%=c.lista + c.nombre%></option>
-           <% } });%>
-          </select>
-          <h2>HCU</h2>
-        <select id="funcion" name="funcion" class="form-control" required>
-          <option>--Selecciona la funcion--</option>
-        <% candidatos.forEach((c)=>{ %>
-          <% console.log(c); if (c.id_cargo=== 3) {%>
-            <option value="<%= c.lista%>"><%=c.nombre%></option>
-           <% } });%>
-          </select>
-    <input type="submit" value="Votar"/>
-<%- include('partials/pie'); %>
+	        <div id="loader">
+            <p class="text-center">Loading...</p>
+          </div>
+          <div id="content" style="display: none;">
+            <form onSubmit="App.castVote(); return false;">
+              <div class="form-group">
+                <label for="candidatesSelect">Select Candidate</label>
+                <select class="form-control" id="candidatesSelect">
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Votar</button>
+              <hr />
+            </form>
+          </div>
+          <hr/>
+          <p id="accountAddress" class="text-center"></p>
+      </div>
+      <script>
+        $('a.nav-link').click(function(){
+            $('a.nav-link').removeClass("active");
+            $(this).addClass("active");
+        });
+        </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>  
+
+  </body>
+</html>
 </body>
 </html>
