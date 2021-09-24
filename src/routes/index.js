@@ -38,7 +38,19 @@ router.get('/', (req,res)=>{
             name: req.session.name
       });
 });
-    }else{
+    }else if(req.session.loggedIn && req.session.rol == 1){
+        //     res.locals.user = req.session.name;
+        con.query(queries.join(';'), (err, result)=>{
+          if(err)throw err; 
+          res.render('ingreso',{
+                 listas: result[0],
+                 candidatos: result[1],
+                 login: true,
+                 rol:1,
+                 name: req.session.name
+           });
+     });
+         }else{
         res.render('index',{
         login: false
     });

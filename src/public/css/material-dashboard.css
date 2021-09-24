@@ -15167,7 +15167,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar[data-background-color="blue"] {
-  background-color: #6d7bf7;
+  /* background-image: url("../img/fondo.png"); */
+  background: linear-gradient(0deg, rgba(147,236,227,1) 1%, rgba(7,97,200,1) 80%);
 }
 
 .sidebar .sidebar-wrapper {

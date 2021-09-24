@@ -2,6 +2,7 @@
   "dependencies": {
     "@truffle/contract": "^4.3.35",
     "bootstrap": "^5.1.1",
+    "chart.js": "^3.5.1",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
