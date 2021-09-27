@@ -3,7 +3,7 @@
 <%- include('partials/head'); %>
 <div class="content">
   <div class="row">
-    <div class="col-md-12">
+    <div id="ingreso" style="display: block;" class="col-md-12">
       <% if (login) {%>
       <h2 style="margin-top: 20px;">Bienvenido a las votaciones UG</h2>
       <div class="Formatos">
@@ -21,21 +21,23 @@
       <div id="loader">
         <p class="text-center">Loading...</p>
       </div>
+        
+    <button onclick="myFunction()">Clickeame</button>
       <div id="content" style="display: none;">
-        <form onSubmit="App.castVote(); return false;">
+        <form action="/votos" method="POST" onSubmit="return App.castVote();" >
+          <input name="cedul" value="<%= cedula %>" style="display: none;">
           <div class="form-group">
-            <label for="candidatesSelect">Select Candidate</label>
-            <select class="form-control" id="candidatesSelect">
+            <label  style="margin-bottom: 30px; margin-top: 20px;" for="candidatesSelect"><%= name%> Selecciona la lista</label>
+            <select style="margin-bottom: 30px ;" class="form-control" id="candidatesSelect">
             </select>
           </div>
-          <button type="submit" class="btn btn-primary">Votar</button>
+          <button type="submit"  class="btn btn-primary">Votar</button>
           <hr />
         </form>
       </div>
-      <hr />
       <p id="accountAddress" class="text-center"></p>
+      
     </div>
-
   </div>
 </div>
 </div>
@@ -49,6 +51,29 @@
 
 <script src="js/perfect-scrollbar.jquery.min.js"></script>
 <script src="js/material-dashboard.js"></script>
+<% if(typeof alert != "undefined") { %>
+  <script>
+      Swal.fire({
+          alert: '<%= alert%>',
+          title: '<%= alertTitle %>',
+          text: '<%= alertMessage%>',
+          icon: '<%= alertIcon %>',
+          showConfimButton: <%= showConfirmButton %>,
+          timer: <%= time%>
+
+      }).then(()=>{
+          window.location ='/<%=ruta%>'
+      })
+    window.onload =  function myFunction() {
+    var x = document.getElementById("ingreso");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+  </script>
+<%}%>
 </body>
 
 </html>

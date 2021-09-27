@@ -28,7 +28,6 @@ App = {
 
   //Acceso al deploy del contrato y almacenamiento en una funcion
   initContract: async () => {
-    console.log("llego");
     const res = await fetch("Votaciones.json");
       const votacionesJSON = await res.json();
       console.log(votacionesJSON);
@@ -78,6 +77,9 @@ App = {
     }).then(function(candidatesCount) {
       var candidatesResults = $("#candidatesResults");
       candidatesResults.empty();
+      
+      var votos = $("#votos");
+      votos.empty();
 
       //Enumeracion de los candidatos creados en el contrato
       var candidatesSelect = $('#candidatesSelect');
@@ -88,6 +90,8 @@ App = {
           var id = candidate[0];
           var name = candidate[1];
           var voteCount = candidate[2];
+
+          votos.append("<h3 class='voto'>"+voteCount + "</h3>");
 
           // Carga las listas en una tabla
           var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>"
@@ -119,6 +123,7 @@ App = {
       // Wait for votes to update
       $("#content").show();
       $("#loader").hide();
+      return true;
     }).catch(function(err) {
       console.error(err);
     });

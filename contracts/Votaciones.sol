@@ -44,10 +44,14 @@ contract Votaciones{
         // registra que el votante ha votado, agregando la cuenta al mapeo de votantes
         voters[msg.sender] = true;
 
+        // registra que el votante ha votado, agregando la cuenta al mapeo de votantes
+        voters[msg.sender] = true;
+
          // actualizar el recuento de votos del candidato
         candidates[_candidateId].voteCount ++;
 
         // trigger voted event
         emit votedEvent(_candidateId);
+        return true;
     }
 }

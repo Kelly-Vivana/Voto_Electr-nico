@@ -7,19 +7,42 @@ const app=express();
 
 const crud = require('../controllers/CRU');
 router.post('/save', crud.save);
+router.post('/votos', crud.votos);
 router.post('/save_Votante', crud.save_Votante);
 router.post('/update', crud.update);
-router.post('/inicio', crud.inicio);
+router.post('/inicio', crud.inicio); 
+router.post('/eleccion', crud.eleccion); 
 
 router.get('/login', (req,res)=>{
     res.render('index');
 });
+
 router.get('/logout', (req,res)=>{
     req.session.destroy(()=>{
         res.redirect('login');
     })
 });
 
+router.get('/configVotacion', (req,res)=>{
+    if(req.session.loggedIn && req.session.rol == 1){
+        con.query(`SELECT * FROM eleccion`, (err, result)=>{
+            if(err){
+                throw err;
+            }else{
+                res.render('configVotacion', {
+                    results: result, 
+                    login: true,
+                    rol:1,
+                    name: req.session.name
+                });
+            }
+        });
+    }else{
+        res.render('index',{
+        login: false });
+    }
+    });
+    
 router.get('/', (req,res)=>{
     //let user= req.session.name;
     var queries = [
@@ -35,6 +58,7 @@ router.get('/', (req,res)=>{
             candidatos: result[1],
             login: true,
             rol:2,
+            cedula: req.session.cedula, 
             name: req.session.name
       });
 });
@@ -47,6 +71,7 @@ router.get('/', (req,res)=>{
                  candidatos: result[1],
                  login: true,
                  rol:1,
+                 cedula: req.session.cedula, 
                  name: req.session.name
            });
      });
@@ -131,6 +156,15 @@ router.get('/editCandidato:id', (req,res)=>{
 }
 });
 
+router.get('/deleteElecc:num', (req, res)=>{
+    const id= req.params.num;
+    console.log(id);
+    con.query('DELETE FROM eleccion WHERE id= ?', [id], (err,result)=>{
+        if(err) throw err;
+        res.redirect('/configVotacion');  
+    });
+});
+
 router.get('/delete:id', (req, res)=>{
     const id= req.params.id;
     con.query('DELETE FROM candidato WHERE id= ?', [id], (err,result)=>{
@@ -180,7 +214,6 @@ router.get('/deleteVotante:id', (req, res)=>{
         res.redirect('/votantes');  
     });
 });
-
 
 router.get('/estadisticas', (req,res)=>{
     

@@ -274,6 +274,9 @@ input[type="time"],
 input[type="datetime-local"],
 input[type="month"] {
   -webkit-appearance: listbox;
+  color: dimgrey;
+  border-color: cadetblue;
+  font-size: 15px;
 }
 
 textarea {
@@ -9454,7 +9457,7 @@ a.text-dark:focus {
 
 .btn.btn-primary:hover {
   color: #fff;
-  background-color: #4bc48b;
+  background-color: #007bff;
   border-color: #701c7e;
 }
 
@@ -9462,7 +9465,7 @@ a.text-dark:focus {
 .btn.btn-primary.focus,
 .btn.btn-primary:hover {
   color: #fff;
-  background-color: #4bc48b;
+  background-color:#007bff;
   border-color: #701c7e;
 }
 
